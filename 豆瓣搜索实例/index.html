@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style type="text/css">
+        hr,div,dl,dt{
+            margin: 0;
+            padding: 0;
+        }
+
+        #q{
+            width: 300px;
+            height: 30px;
+            padding:5px;
+            border:1px solid gray;
+            font-size: 16px;
+        }
+
+        #btn{
+            height:42px;
+            margin-left: 10px;
+            width:60px;
+            text-align: center;
+            cursor: pointer;
+            background: #fff;
+            border:1px solid gray;
+            border-radius:1px;
+            vertical-align:top;
+            letter-spacing:2px;
+        }
+        #btn:hover{
+            background: #eee;
+        }
+        dl{
+            border-bottom: 1px dotted #000;
+        }
+        dt{
+            font-weight: bold;
+        }
+    </style>
+    <script type="text/javascript">
+
+        function handle(data){
+            // console.log(data);
+
+            var oMsg = document.getElementById('msg');
+            var oList = document.getElementById('list');
+            oMsg.innerHTML = data.title.$t + '：' + data['opensearch:totalResults'].$t;
+
+            var oEntry = data.entry;
+            var html;
+            for (var i = 0; i < oEntry.length; i++) {
+                html += '<dl><dt>'+oEntry[i].title.$t+'</dt><dd><img src="'+oEntry[i].link[2]['@href']+'" alt=""></dd></dl>'
+            };
+
+            oList.innerHTML = html;
+        }
+
+        window.onload = function(){
+            var oQ = document.getElementById('q');
+            var oBtn = document.getElementById('btn');
+            var oMsg = document.getElementById('msg');
+            var oList = document.getElementById('list');
+
+            oBtn.onclick =function(){
+                if(this.value != ''){
+                    var oScript = document.createElement('script');
+                    oScript.src = 'http://api.douban.com/book/subjects?q='+oQ.value+'&alt=xd&callback=handle';
+                    document.body.appendChild(oScript);
+                }
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+    <input type="text" id="q" /><input type="button" name="" value="搜索" id="btn">
+    <p id="msg"></p>
+    <hr>
+    <div id="list">
+        <!-- <dl>
+            <dt>aaaaa</dt>
+            <dd><img src="" alt=""></dd>
+        </dl> -->
+    </div>
+</body>
+</html>
