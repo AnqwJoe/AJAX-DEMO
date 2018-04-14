@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style type="text/css">
+        #q{
+            width: 300px;
+            height: 30px;
+            padding:5px;
+            border:1px solid gray;
+            font-size: 16px;
+        }
+        #ul1{
+            width: 310px;
+            border:1px solid gray;
+            margin: 0;
+            padding: 0;
+            display: none;
+
+        }
+        li a{
+            line-height: 30px;
+            padding: 5px;
+            text-decoration:none;
+            color:#000;
+            display: block;
+
+        }
+        li a:hover{
+            background: #eee;
+
+        }
+    </style>
+    <script type="text/javascript">
+        function callback(data){
+            var oUl = document.getElementById('ul1');
+            var html = '';
+            if(data.s.length){
+                for (var i = 0; i < data.s.length; i++) {
+                    html += '<li><a href="#">'+data.s[i]+'</a></li>';
+                }
+                oUl.style.display = 'block';
+                oUl.innerHTML = html;
+            }else{
+                oUl.style.display = 'none';//当无返回数据时，直接隐藏提示框
+            }
+        }
+
+        window.onload = function(){
+            var oQ = document.getElementById('q');
+            var oUl = document.getElementById('ul1');
+
+            oQ.onkeyup = function(){
+                if(this.value != ''){
+                    var oScript = document.createElement('script');
+                    oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+ this.value +'&cb=callback';
+                    document.body.appendChild(oScript);
+                }else{
+                    oUl.style.display = 'none';//当文本框为空时，直接隐藏提示框
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="q" />
+    <ul id="ul1"><!--
+        <li><a href="#">122345</a></li>
+        <li><a href="#">122345</a></li>
+        <li><a href="#">122345</a></li>
+        <li><a href="#">122345</a></li>
+        <li><a href="#">122345</a></li> -->
+    </ul>
+</body>
+</html>
